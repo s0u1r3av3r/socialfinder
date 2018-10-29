@@ -42,6 +42,18 @@ fi
 printf "\n"
 printf "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Checking username\e[0m\e[1;77m %s\e[0m\e[1;92m on: \e[0m\n" $username
 
+## Telegramm
+
+printf "\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Telegramm: \e[0m"
+check=$(curl -s "https://t.me/$username" -L -H "Accept-Language: en" -i | grep -o 'If you have Telegram' ; echo $?)
+
+if [[ $check == *'1'* ]]; then
+printf "\e[1;92m Found!\e[0m https://t.me/%s\n" $username
+printf "https://t.me/+%s\n" $username >> $username
+elif [[ $check == *'0'* ]]; then
+printf "\e[1;93mNot Found!\e[0m\n"
+fi
+
 ## CodePen
 
 printf "\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] CodePen: \e[0m"
